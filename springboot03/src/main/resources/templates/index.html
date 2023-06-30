@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Thymeleaf</title>
+</head>
+<body>
+    <span th:text="Hello"></span>
+    <hr/>
+    <span th:text="${msg}"></span>
+    <hr/>
+    <span th:text="${#strings.length(msg)}"></span>
+    <hr/>
+    <input type="text" name="msg" th:value="${msg}"/>
+    <hr/>
+    <span th:text="${#dates.format(date)}"></span>
+    <hr/>
+    <span th:text="${#httpServletRequest.getAttribute('req')}"></span>
+    <hr/>
+    <span th:text="${session.sess}"></span>
+    <hr/>
+    <span th:text="${application.con}"></span>
+</body>
+</html>

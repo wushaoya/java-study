@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.UserMapper">
+    <insert id="insertUsers" parameterType="users">
+        insert into users(name,age) values(#{name},#{age})
+    </insert>
+</mapper>
+
+<!-- 高度注意：新建mapper.xml的时候名称一定要带后缀！一定要带后缀！一定要带后缀！否则无法编译进target -->

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dict.mapper.DataMapper">
+    <select id="getSynchronizedFile" resultType="Integer">
+        select count(*) from dip_jwy.dip_file_task_info where approval_status=2
+    </select>
+
+    <select id="getSynchronizedData" resultType="Integer">
+        select count(*) from dip_jwy.dip_task_info where approval_status=2
+    </select>
+
+    <select id="getDataMap" resultType="Integer">
+        select count(*) from dim.dim_dataItem_cast
+    </select>
+
+    <select id="getSubscribeNum" resultType="Integer">
+        select count(*) from dim.dim_order_detail
+    </select>
+
+    <select id="getShared" resultType="Integer">
+        select count(*) from dsp.comm_work_apply where status=1
+    </select>
+
+    <select id="getProposerID" resultType="String">
+        select APPLY_PERSON from dsp.comm_work_apply where status=1
+    </select>
+</mapper>

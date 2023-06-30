@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dict.mapper.SystemBaseInfoMapper">
+    <select id="getWorkSpaceNum" resultType="Integer">
+        select count(*) from aop_portal.comm_project where valid_flag=1
+    </select>
+
+    <select id="getValidUser" resultType="Integer">
+        select count(*) from aop_portal.comm_sys_user where valid_flag=1
+    </select>
+
+    <select id="getValidDepartment" resultType="Integer">
+        select count(*) from aop_portal.comm_sys_org where valid_flag=1
+    </select>
+
+    <select id="getValidDatasource" resultType="Integer">
+        select count(*) from aop_portal.comm_sys_db where valid_code=1
+    </select>
+</mapper>
