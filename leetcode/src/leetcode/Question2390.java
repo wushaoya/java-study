@@ -16,18 +16,14 @@ import java.util.Stack;
 public class Question2390 {
 
     public String removeStars(String s) {
-        Stack<Character> stack = new Stack<>();
+        StringBuilder res = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) == '*') {
-                stack.pop();
+                res.deleteCharAt(res.length() - 1);
             } else {
-                stack.push(s.charAt(i));
+                res.append(s.charAt(i));
             }
         }
-        StringBuilder res = new StringBuilder();
-        stack.forEach(temp -> {
-            res.append(temp);
-        });
         return res.toString();
     }
 }
