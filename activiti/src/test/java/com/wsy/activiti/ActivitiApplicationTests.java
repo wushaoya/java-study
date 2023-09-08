@@ -44,6 +44,7 @@ class ActivitiApplicationTests {
                 .deploy();
         System.out.println("流程部署id：" + deployment.getId());
         System.out.println("流程部署名称：" + deployment.getName());
+        System.out.println("流程部署Key：" + deployment.getKey());
     }
 
     /**
@@ -55,7 +56,7 @@ class ActivitiApplicationTests {
         ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
         // 2、获取RunTimeService
         RuntimeService runtimeService = processEngine.getRuntimeService();
-        // 3、根据流程定义Id启动流程
+        // 3、根据流程定义Key启动流程
         ProcessInstance processInstance = runtimeService
                 .startProcessInstanceByKey("Leave");
         System.out.println("流程定义id：" + processInstance.getProcessDefinitionId());
@@ -77,7 +78,7 @@ class ActivitiApplicationTests {
                 //流程Key
                 .processDefinitionKey("Leave")
                 //只查询该任务负责人的任务
-//         .taskAssignee(assignee)
+         .taskAssignee("employee")
                 .list();
         for (Task task : list) {
             System.out.println("流程实例id：" + task.getProcessInstanceId());
@@ -91,7 +92,7 @@ class ActivitiApplicationTests {
      * 完成任务
      */
     @Test
-    public void completTask() {
+    public void completeTask() {
         // 获取引擎
         ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
         // 获取taskService
@@ -100,7 +101,7 @@ class ActivitiApplicationTests {
                 // 流程Key
                 .processDefinitionKey("Leave")
                 // 要查询的负责人
-//         .taskAssignee("employee")
+         .taskAssignee("employee")
                 .singleResult();
         taskService.complete(task.getId());
     }
