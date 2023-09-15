@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="排他网关接并行网关" name="排他网关接并行网关" isExecutable="true">
+    <startEvent id="sid-0a56a396-4f85-48a1-80cc-6d361feeb8b2"/>
+    <userTask id="sid-bac67ed7-5e71-4a26-b056-73bc7a0be4c5" name="创建申请" activiti:assignee="zhansan"/>
+    <sequenceFlow id="sid-38b68a74-0ac4-4ced-bf8c-89fe9b5730ee" sourceRef="sid-0a56a396-4f85-48a1-80cc-6d361feeb8b2" targetRef="sid-bac67ed7-5e71-4a26-b056-73bc7a0be4c5"/>
+    <userTask id="sid-0932e1f0-1d9f-4c06-9d94-1509aa6b7d99" name="A部门审批" activiti:assignee="lisi"/>
+    <exclusiveGateway id="sid-7a8658e1-aa2c-4b91-84eb-893a7dee2397"/>
+    <sequenceFlow id="sid-bd25ab7d-29c7-4d22-93d2-654c0b5f8cae" sourceRef="sid-bac67ed7-5e71-4a26-b056-73bc7a0be4c5" targetRef="sid-7a8658e1-aa2c-4b91-84eb-893a7dee2397"/>
+    <sequenceFlow id="sid-6fa02bbd-37cc-4ac9-97ec-f9cd6f573082" sourceRef="sid-7a8658e1-aa2c-4b91-84eb-893a7dee2397" targetRef="sid-0932e1f0-1d9f-4c06-9d94-1509aa6b7d99">
+      <conditionExpression xsi:type="tFormalExpression">${key eq 1}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="sid-9fd4c1ea-6089-4649-92ad-8c539c85a2d1" name="B部门审批" activiti:assignee="wangwu"/>
+    <userTask id="sid-c264ad47-d26a-4275-b486-321ae9c3121c" name="D部门审批" activiti:assignee="sunqi"/>
+    <sequenceFlow id="sid-f3741758-218d-48d1-b460-2fd35db07bc8" sourceRef="sid-7a8658e1-aa2c-4b91-84eb-893a7dee2397" targetRef="sid-9fd4c1ea-6089-4649-92ad-8c539c85a2d1">
+      <conditionExpression xsi:type="tFormalExpression">${key eq 2}</conditionExpression>
+    </sequenceFlow>
+    <parallelGateway id="sid-334ff899-5a67-4047-bc39-d1dc2cd39226"/>
+    <sequenceFlow id="sid-b86c211d-129d-4cd6-b483-92f5ea1567ba" sourceRef="sid-0932e1f0-1d9f-4c06-9d94-1509aa6b7d99" targetRef="sid-5fc494d2-6daa-473f-8677-3994e8c5cda5"/>
+    <sequenceFlow id="sid-c1bb612f-b855-48d8-9b00-ee1819f6e554" sourceRef="sid-9fd4c1ea-6089-4649-92ad-8c539c85a2d1" targetRef="sid-5fc494d2-6daa-473f-8677-3994e8c5cda5"/>
+    <userTask id="sid-24cd77f6-651d-454c-b321-f43c63803210" name="C部门审批" activiti:assignee="zhaoliu"/>
+    <sequenceFlow id="sid-dea5d119-a551-4a32-97c1-d1334424647f" sourceRef="sid-334ff899-5a67-4047-bc39-d1dc2cd39226" targetRef="sid-c264ad47-d26a-4275-b486-321ae9c3121c">
+      <conditionExpression xsi:type="tFormalExpression"/>
+    </sequenceFlow>
+    <sequenceFlow id="sid-3522e7ac-7022-47b3-92d8-a88ddb2dee0c" sourceRef="sid-334ff899-5a67-4047-bc39-d1dc2cd39226" targetRef="sid-24cd77f6-651d-454c-b321-f43c63803210">
+      <conditionExpression xsi:type="tFormalExpression"/>
+    </sequenceFlow>
+    <parallelGateway id="sid-f61f8f07-8b6d-4d81-afa2-fca0c295c324"/>
+    <sequenceFlow id="sid-0f068e12-7716-49b8-8982-db0fcb5e90c9" sourceRef="sid-24cd77f6-651d-454c-b321-f43c63803210" targetRef="sid-f61f8f07-8b6d-4d81-afa2-fca0c295c324"/>
+    <sequenceFlow id="sid-900b44b1-4995-4d07-bbe3-753ba0ae12bf" sourceRef="sid-c264ad47-d26a-4275-b486-321ae9c3121c" targetRef="sid-f61f8f07-8b6d-4d81-afa2-fca0c295c324"/>
+    <endEvent id="sid-60b28e1c-2c3f-4146-af1b-669996d01f97"/>
+    <sequenceFlow id="sid-e45683c1-412d-470a-893d-13c2a128c5a9" sourceRef="sid-f61f8f07-8b6d-4d81-afa2-fca0c295c324" targetRef="sid-60b28e1c-2c3f-4146-af1b-669996d01f97">
+      <conditionExpression xsi:type="tFormalExpression"/>
+    </sequenceFlow>
+    <exclusiveGateway id="sid-5fc494d2-6daa-473f-8677-3994e8c5cda5"/>
+    <sequenceFlow id="sid-d54731f0-cb91-4702-99ef-b991b0e1410c" sourceRef="sid-5fc494d2-6daa-473f-8677-3994e8c5cda5" targetRef="sid-334ff899-5a67-4047-bc39-d1dc2cd39226">
+      <conditionExpression xsi:type="tFormalExpression"/>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_排他网关接并行网关">
+    <bpmndi:BPMNPlane bpmnElement="排他网关接并行网关" id="BPMNPlane_排他网关接并行网关">
+      <bpmndi:BPMNShape id="shape-084adb57-a2e8-423e-a2c4-1bb649ce9148" bpmnElement="sid-0a56a396-4f85-48a1-80cc-6d361feeb8b2">
+        <omgdc:Bounds x="105.0" y="-280.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-18936d3c-e172-4e18-a899-ef0d4773418f" bpmnElement="sid-bac67ed7-5e71-4a26-b056-73bc7a0be4c5">
+        <omgdc:Bounds x="70.0" y="-225.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-e2d61b2c-7c51-4b06-bfd4-0cc060a8d474" bpmnElement="sid-38b68a74-0ac4-4ced-bf8c-89fe9b5730ee">
+        <omgdi:waypoint x="120.0" y="-250.0"/>
+        <omgdi:waypoint x="120.0" y="-225.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-2f354753-0c67-4be4-86fc-e684d7b85b1f" bpmnElement="sid-0932e1f0-1d9f-4c06-9d94-1509aa6b7d99">
+        <omgdc:Bounds x="80.0" y="-10.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-6f24e854-a107-4d72-b848-2ed835c8f95a" bpmnElement="sid-7a8658e1-aa2c-4b91-84eb-893a7dee2397">
+        <omgdc:Bounds x="109.99999" y="-130.0" width="40.0" height="40.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-e4a62f9f-412b-415d-94a0-297203083feb" bpmnElement="sid-bd25ab7d-29c7-4d22-93d2-654c0b5f8cae">
+        <omgdi:waypoint x="120.0" y="-145.0"/>
+        <omgdi:waypoint x="130.0" y="-130.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-972c0a8a-2ca4-49db-980e-22449019aa75" bpmnElement="sid-6fa02bbd-37cc-4ac9-97ec-f9cd6f573082">
+        <omgdi:waypoint x="130.0" y="-90.0"/>
+        <omgdi:waypoint x="130.0" y="-10.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="sid-1e17e69c-da6f-4d97-b091-e228e5b91776" bpmnElement="sid-9fd4c1ea-6089-4649-92ad-8c539c85a2d1">
+        <omgdc:Bounds x="247.56201" y="-18.647995" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-62618d77-6385-479f-8467-fcaf8fafcbdb" bpmnElement="sid-c264ad47-d26a-4275-b486-321ae9c3121c">
+        <omgdc:Bounds x="275.0" y="138.392" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-f70987d9-3f82-4639-9992-a851947265f9" bpmnElement="sid-f3741758-218d-48d1-b460-2fd35db07bc8">
+        <omgdi:waypoint x="150.0" y="-110.0"/>
+        <omgdi:waypoint x="247.56201" y="1.352005"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-2fbbe84b-c782-40bc-9a47-2ff5a895a08f" bpmnElement="sid-334ff899-5a67-4047-bc39-d1dc2cd39226">
+        <omgdc:Bounds x="190.0" y="100.0" width="40.0" height="40.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-8cb34898-7063-4d0e-b306-6f0c142e40e3" bpmnElement="sid-b86c211d-129d-4cd6-b483-92f5ea1567ba">
+        <omgdi:waypoint x="180.0" y="50.0"/>
+        <omgdi:waypoint x="277.56204" y="110.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-8ab3abe9-40ec-4c74-8e05-e78b69fd9d7f" bpmnElement="sid-c1bb612f-b855-48d8-9b00-ee1819f6e554">
+        <omgdi:waypoint x="272.562" y="61.352005"/>
+        <omgdi:waypoint x="297.56204" y="95.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="sid-042dafa4-5555-4fdd-94fa-162787629926" bpmnElement="sid-24cd77f6-651d-454c-b321-f43c63803210">
+        <omgdc:Bounds x="87.26599" y="149.77602" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-96cf8be5-5e1a-485a-b913-f122e1e2996f" bpmnElement="sid-dea5d119-a551-4a32-97c1-d1334424647f">
+        <omgdi:waypoint x="210.0" y="140.0"/>
+        <omgdi:waypoint x="375.0" y="158.392"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-c2403c92-16ea-4aa9-bd92-3d7fa0c2f8f3" bpmnElement="sid-3522e7ac-7022-47b3-92d8-a88ddb2dee0c">
+        <omgdi:waypoint x="190.0" y="120.0"/>
+        <omgdi:waypoint x="87.26599" y="169.77602"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-3465ac67-c506-4e7f-a683-925a43c74e68" bpmnElement="sid-f61f8f07-8b6d-4d81-afa2-fca0c295c324">
+        <omgdc:Bounds x="210.0" y="235.0" width="40.0" height="40.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-a291f6a0-8056-4292-a71a-049a6c419b51" bpmnElement="sid-0f068e12-7716-49b8-8982-db0fcb5e90c9">
+        <omgdi:waypoint x="187.26599" y="209.77602"/>
+        <omgdi:waypoint x="230.0" y="235.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-1dedbf6d-c294-4343-bc0a-2a28d0466a0a" bpmnElement="sid-900b44b1-4995-4d07-bbe3-753ba0ae12bf">
+        <omgdi:waypoint x="300.0" y="218.392"/>
+        <omgdi:waypoint x="250.0" y="255.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-31ba6cbf-13fd-4937-b0b3-486e7edbfe72" bpmnElement="sid-60b28e1c-2c3f-4146-af1b-669996d01f97">
+        <omgdc:Bounds x="35.0" y="265.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-effaa9c1-8d52-475f-82a5-815d7febad9e" bpmnElement="sid-e45683c1-412d-470a-893d-13c2a128c5a9">
+        <omgdi:waypoint x="210.0" y="255.0"/>
+        <omgdi:waypoint x="65.0" y="272.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-c4cc1280-2105-4adf-b52d-5936f2dd9ad3" bpmnElement="sid-5fc494d2-6daa-473f-8677-3994e8c5cda5">
+        <omgdc:Bounds x="277.56204" y="90.0" width="40.0" height="40.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-ee1a8dbb-1124-40ce-9f94-3c272487691f" bpmnElement="sid-d54731f0-cb91-4702-99ef-b991b0e1410c">
+        <omgdi:waypoint x="297.56204" y="130.0"/>
+        <omgdi:waypoint x="230.0" y="120.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

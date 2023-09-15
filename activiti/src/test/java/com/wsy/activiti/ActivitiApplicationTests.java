@@ -16,7 +16,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class ActivitiApplicationTests {
@@ -37,11 +39,11 @@ class ActivitiApplicationTests {
         // 3、使用RepositoryService进行部署
         Deployment deployment = repositoryService.createDeployment()
                 // 添加bpmn资源
-                .addClasspathResource("bpmn/Leave.bpmn20.xml")
-                // 添加png资源
-                .addClasspathResource("bpmn/Leave.jpg")
+                .addClasspathResource("bpmn/排他网关接并行网关.bpmn20.xml")
                 .name("请假申请流程")
                 .deploy();
+        List<ProcessDefinition> list = repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).list();
+        System.out.println("--->" + list);
         System.out.println("流程部署id：" + deployment.getId());
         System.out.println("流程部署名称：" + deployment.getName());
         System.out.println("流程部署Key：" + deployment.getKey());
@@ -58,7 +60,7 @@ class ActivitiApplicationTests {
         RuntimeService runtimeService = processEngine.getRuntimeService();
         // 3、根据流程定义Key启动流程
         ProcessInstance processInstance = runtimeService
-                .startProcessInstanceByKey("Leave");
+                .startProcessInstanceByKey("排他网关接并行网关");
         System.out.println("流程定义id：" + processInstance.getProcessDefinitionId());
         System.out.println("流程实例id：" + processInstance.getId());
         System.out.println("当前活动Id：" + processInstance.getActivityId());
@@ -76,9 +78,9 @@ class ActivitiApplicationTests {
         // 根据流程key和任务负责人查询任务
         List<Task> list = taskService.createTaskQuery()
                 //流程Key
-                .processDefinitionKey("Leave")
+                .processDefinitionKey("排他网关接并行网关")
                 //只查询该任务负责人的任务
-         .taskAssignee("employee")
+                .taskAssignee("employee")
                 .list();
         for (Task task : list) {
             System.out.println("流程实例id：" + task.getProcessInstanceId());
@@ -96,14 +98,16 @@ class ActivitiApplicationTests {
         // 获取引擎
         ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
         // 获取taskService
+        Map<String,Object> map = new HashMap<>();
+        map.put("key", 1);
         TaskService taskService = processEngine.getTaskService();
         Task task = taskService.createTaskQuery()
                 // 流程Key
-                .processDefinitionKey("Leave")
+                .processDefinitionKey("排他网关接并行网关")
                 // 要查询的负责人
-         .taskAssignee("employee")
+                .taskAssignee("lisi")
                 .singleResult();
-        taskService.complete(task.getId());
+        taskService.complete(task.getId(), map);
     }
 
 
@@ -172,17 +176,18 @@ class ActivitiApplicationTests {
         instanceQuery.orderByHistoricActivityInstanceStartTime().asc();
         List<HistoricActivityInstance> activityInstanceList = instanceQuery.list();
         for (HistoricActivityInstance hi : activityInstanceList) {
-            System.out.println("============="+hi.getActivityId()+" START=============");
+            System.out.println("=============" + hi.getActivityId() + " START=============");
             System.out.println(hi.getActivityId());
             System.out.println(hi.getActivityName());
             System.out.println(hi.getProcessDefinitionId());
             System.out.println(hi.getProcessInstanceId());
-            System.out.println("============="+hi.getActivityId()+" END=============");
+            System.out.println("=============" + hi.getActivityId() + " END=============");
         }
     }
 
     /**
      * 流程资源下载
+     *
      * @throws IOException
      */
     @Test
