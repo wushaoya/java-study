@@ -10,7 +10,7 @@
     <sequenceFlow id="sid-6fa02bbd-37cc-4ac9-97ec-f9cd6f573082" sourceRef="sid-7a8658e1-aa2c-4b91-84eb-893a7dee2397" targetRef="sid-0932e1f0-1d9f-4c06-9d94-1509aa6b7d99">
       <conditionExpression xsi:type="tFormalExpression">${key eq 1}</conditionExpression>
     </sequenceFlow>
-    <userTask id="sid-9fd4c1ea-6089-4649-92ad-8c539c85a2d1" name="B部门审批" activiti:assignee="wangwu"/>
+    <userTask id="sid-9fd4c1ea-6089-4649-92ad-8c539c85a2d1" name="B部门审批" activiti:candidateGroups="B"/>
     <userTask id="sid-c264ad47-d26a-4275-b486-321ae9c3121c" name="D部门审批" activiti:assignee="sunqi"/>
     <sequenceFlow id="sid-f3741758-218d-48d1-b460-2fd35db07bc8" sourceRef="sid-7a8658e1-aa2c-4b91-84eb-893a7dee2397" targetRef="sid-9fd4c1ea-6089-4649-92ad-8c539c85a2d1">
       <conditionExpression xsi:type="tFormalExpression">${key eq 2}</conditionExpression>

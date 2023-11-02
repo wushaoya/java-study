@@ -2,11 +2,21 @@
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
   <process id="Leave" name="Leave" isExecutable="true">
     <startEvent id="sid-d57d776a-89b1-48ff-9668-debe50f3a5c7"/>
-    <userTask id="sid-9e10998d-7195-4c56-9e41-ba28da1b40a3" name="创建出差申请" activiti:assignee="Employee">
+    <userTask id="sid-9e10998d-7195-4c56-9e41-ba28da1b40a3" name="创建出差申请" activiti:candidateUsers="zhangsan,lisi,wangwu">
       <documentation>创建出差申请</documentation>
+      <extensionElements>
+        <activiti:executionListener class="Class 1"/>
+        <activiti:formProperty id="Property 1"/>
+      </extensionElements>
     </userTask>
     <userTask id="sid-2bf91b4e-7556-40fa-bdad-b4f0f5a8fcd4" name="组长审批" activiti:assignee="TeamLeader">
       <documentation>组长审批</documentation>
+      <extensionElements>
+        <activiti:formProperty id="Property 1"/>
+        <activiti:executionListener class="Class 1">
+          <activiti:field name="Name 1"/>
+        </activiti:executionListener>
+      </extensionElements>
     </userTask>
     <userTask id="sid-30af0687-85df-4f34-93ae-43b2930c1589" name="经理审批" activiti:assignee="Manager">
       <documentation>经理审批</documentation>
