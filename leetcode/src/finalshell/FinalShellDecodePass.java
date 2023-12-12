@@ -16,9 +16,10 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
 public class FinalShellDecodePass {
-    public static void main(String[] args)throws Exception {
-        System.out.println(decodePass("AExGImN5LSheiLVF+UYtZWeutvpQQgAK"));
+    public static void main(String[] args) throws Exception {
+        System.out.println("密码：" + decodePass("YHJLKjpEbztJ1dP3TL0s3L0TtAhAhFrC"));
     }
+
     public static byte[] desDecode(byte[] data, byte[] head) throws Exception {
         SecureRandom sr = new SecureRandom();
         DESKeySpec dks = new DESKeySpec(head);
@@ -28,6 +29,7 @@ public class FinalShellDecodePass {
         cipher.init(2, securekey, sr);
         return cipher.doFinal(data);
     }
+
     public static String decodePass(String data) throws Exception {
         if (data == null) {
             return null;
@@ -44,24 +46,25 @@ public class FinalShellDecodePass {
             return rs;
         }
     }
+
     static byte[] ranDomKey(byte[] head) {
-        long ks = 3680984568597093857L / (long)(new Random((long)head[5])).nextInt(127);
+        long ks = 3680984568597093857L / (long) (new Random((long) head[5])).nextInt(127);
         Random random = new Random(ks);
         int t = head[0];
 
-        for(int i = 0; i < t; ++i) {
+        for (int i = 0; i < t; ++i) {
             random.nextLong();
         }
 
         long n = random.nextLong();
         Random r2 = new Random(n);
-        long[] ld = new long[]{(long)head[4], r2.nextLong(), (long)head[7], (long)head[3], r2.nextLong(), (long)head[1], random.nextLong(), (long)head[2]};
+        long[] ld = new long[]{(long) head[4], r2.nextLong(), (long) head[7], (long) head[3], r2.nextLong(), (long) head[1], random.nextLong(), (long) head[2]};
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(bos);
         long[] var15 = ld;
         int var14 = ld.length;
 
-        for(int var13 = 0; var13 < var14; ++var13) {
+        for (int var13 = 0; var13 < var14; ++var13) {
             long l = var15[var13];
 
             try {
@@ -81,15 +84,16 @@ public class FinalShellDecodePass {
         keyData = md5(keyData);
         return keyData;
     }
+
     public static byte[] md5(byte[] data) {
         String ret = null;
-        byte[] res=null;
+        byte[] res = null;
 
         try {
             MessageDigest m;
             m = MessageDigest.getInstance("MD5");
             m.update(data, 0, data.length);
-            res=m.digest();
+            res = m.digest();
             ret = new BigInteger(1, res).toString(16);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
