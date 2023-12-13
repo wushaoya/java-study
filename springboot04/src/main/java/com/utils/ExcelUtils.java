@@ -35,13 +35,21 @@ public class ExcelUtils {
         }
         System.out.println("success");*/
         List<List<List>> table1 = readExcel(new File("C:\\Users\\Administrator\\Desktop\\2023年汇总表.xls"));
-        List<List<List>> table2 = readExcel(new File("C:\\Users\\Administrator\\Desktop\\1-11月汇总.xls"));
-        List<List<List>> table3 = readExcel(new File("C:\\Users\\Administrator\\Desktop\\table3.xls"));
+        //List<List<List>> table2 = readExcel(new File("C:\\Users\\Administrator\\Desktop\\1-11月汇总.xls"));
+        //List<List<List>> table3 = readExcel(new File("C:\\Users\\Administrator\\Desktop\\table3.xls"));
+        //List<List<List>> table4 = readExcel(new File("C:\\Users\\Administrator\\Desktop\\4-5月全县人员档案花名册.xlsx"));
+        //List<List<List>> table6 = readExcel(new File("C:\\Users\\Administrator\\Desktop\\6月全县人员档案花名册.xlsx"));
+        //List<List<List>> table7 = readExcel(new File("C:\\Users\\Administrator\\Desktop\\7月全县人员档案花名册.xlsx"));
+        //List<List<List>> table8 = readExcel(new File("C:\\Users\\Administrator\\Desktop\\8月全县人员档案花名册.xlsx"));
+        //List<List<List>> table9 = readExcel(new File("C:\\Users\\Administrator\\Desktop\\9月全县人员档案花名册.xlsx"));
+//        List<List<List>> table10 = readExcel(new File("C:\\Users\\Administrator\\Desktop\\10月全县人员档案花名册.xlsx"));
+//        List<List<List>> table11 = readExcel(new File("C:\\Users\\Administrator\\Desktop\\11月全县人员档案花名册.xlsx"));
+        List<List<List>> table12 = readExcel(new File("C:\\Users\\Administrator\\Desktop\\12月全县人员档案花名册.xlsx"));
         List<String> ids = getIdFromTable1(table1);
         List<String> res = new ArrayList<>();
         for (String id : ids) {
-            for (int i = 1; i < table3.get(0).size(); i++) {
-                if(id.equals(table3.get(0).get(i).get(2).toString())){
+            for (int i = 2; i < table12.get(0).size(); i++) {
+                if(id.equals(table12.get(0).get(i).get(2).toString())){
                     //table2.get(0).get(i).add("存在");
                     res.add(id);
                     break;
@@ -88,9 +96,10 @@ public class ExcelUtils {
      * @return
      */
     public static List<List<List>> readExcel(File file) {
+        Workbook wb = null;
         try {
             //create input stream ,get data
-            Workbook wb = readExcelByFormat(file.getAbsolutePath());
+            wb = readExcelByFormat(file.getAbsolutePath());
             int sheetSize = wb.getNumberOfSheets();
             List<List<List>> sheetList = new ArrayList<>();
             // 遍历excel每个表
@@ -122,6 +131,12 @@ public class ExcelUtils {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            try {
+                wb.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         return null;
 
@@ -135,7 +150,6 @@ public class ExcelUtils {
      * @throws Exception
      */
     public static Workbook readExcelByFormat(String filePath) {
-        Workbook wb = null;
         if (filePath == null) {
             return null;
         }
@@ -154,8 +168,14 @@ public class ExcelUtils {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-        return wb;
+        return null;
     }
 
     /**
